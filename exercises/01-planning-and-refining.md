@@ -39,7 +39,7 @@ Read the skill's final report carefully. Notice the starting vs. final score, an
 
 ### 3. Execute
 
-Approve the plan and have Claude implement it. Keep the plan file open — if execution drifts from the plan, either correct the execution or update the plan, don't let them diverge silently.
+Approve the plan and have Claude implement it. Observe the outcome.
 
 ---
 
