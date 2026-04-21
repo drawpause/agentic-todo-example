@@ -10,6 +10,39 @@ Complex features fail when the agent jumps straight to coding. A good plan surfa
 
 ---
 
+## Setup — install the `/refine-plan` skill
+
+This repo bundles the skill so the exercise is self-contained.
+
+```bash
+mkdir -p ~/.claude/skills/refine-plan
+cp exercises/skills/refine-plan/SKILL.md ~/.claude/skills/refine-plan/SKILL.md
+```
+
+**Restart Claude Code** if it's already running — skills are loaded at startup, so a session that was running before the install won't see the new skill.
+
+Verify: in Claude Code, type `/` and confirm `refine-plan` appears in the skill list. (If it was already installed, the `cp` is a harmless overwrite.)
+
+---
+
+## Steps
+
+### 1. Draft the initial plan
+
+Enter plan mode (Shift+Tab twice, or run `/plan`) and paste the **Target feature** description below as your prompt. Let Claude explore the codebase and write the plan to the plan file it reports. **Do not approve it yet.**
+
+### 2. Refine
+
+When plan mode finishes and shows you the approval prompt, **hit `Esc` first** — that returns you to the normal input so you can type a slash command. Then run `/refine-plan` **once**. The skill iterates on its own: it scores the plan 0–10, researches weak areas, rewrites weak sections, re-scores, and repeats until the score reaches 8+ with no blockers, or until further progress is blocked. You don't re-invoke it — watch it loop and read the final report.
+
+Read the skill's final report carefully. Notice the starting vs. final score, and which weakness categories came up most — that's the lesson.
+
+### 3. Execute
+
+Approve the plan and have Claude implement it. Keep the plan file open — if execution drifts from the plan, either correct the execution or update the plan, don't let them diverge silently.
+
+---
+
 ## Target feature
 
 Use the block below as your plan-mode prompt, verbatim:
@@ -49,39 +82,6 @@ Constraints:
 
 ---
 
-## Setup — install the `/refine-plan` skill
-
-This repo bundles the skill so the exercise is self-contained.
-
-```bash
-mkdir -p ~/.claude/skills/refine-plan
-cp exercises/skills/refine-plan/SKILL.md ~/.claude/skills/refine-plan/SKILL.md
-```
-
-**Restart Claude Code** if it's already running — skills are loaded at startup, so a session that was running before the install won't see the new skill.
-
-Verify: in Claude Code, type `/` and confirm `refine-plan` appears in the skill list. (If it was already installed, the `cp` is a harmless overwrite.)
-
----
-
-## Steps
-
-### 1. Draft the initial plan
-
-Enter plan mode (Shift+Tab twice, or run `/plan`) and paste the **Target feature** description above as your prompt. Let Claude explore the codebase and write the plan to the plan file it reports. **Do not approve it yet.**
-
-### 2. Refine
-
-When plan mode finishes and shows you the approval prompt, **hit `Esc` first** — that returns you to the normal input so you can type a slash command. Then run `/refine-plan` **once**. The skill iterates on its own: it scores the plan 0–10, researches weak areas, rewrites weak sections, re-scores, and repeats until the score reaches 8+ with no blockers, or until further progress is blocked. You don't re-invoke it — watch it loop and read the final report.
-
-Read the skill's final report carefully. Notice the starting vs. final score, and which weakness categories came up most — that's the lesson.
-
-### 3. Execute
-
-Approve the plan and have Claude implement it. Keep the plan file open — if execution drifts from the plan, either correct the execution or update the plan, don't let them diverge silently.
-
----
-
 ## Acceptance criteria
 
 - [ ] All 6 features work end-to-end in a browser when `index.html` is opened directly (no server needed).
@@ -93,7 +93,6 @@ Approve the plan and have Claude implement it. Keep the plan file open — if ex
 
 ## Hints
 
-- If the first plan scores high straight away, you probably haven't read it adversarially. Look for the words "update", "adjust", "ensure" — those are hand-waves.
 - The most common miss in plans for this exercise is the **focus rule** for keyboard shortcuts. If your plan doesn't say *explicitly* what happens when a text input is focused, that's a weakness.
 - A schema version field (`schemaVersion: 1`) is cheap now and prevents pain later when you'd otherwise need a silent migration.
 - Don't refactor the inline `onclick` style unless your plan says you will — drift between "planned" and "shipped" is what this exercise is training you to notice.
