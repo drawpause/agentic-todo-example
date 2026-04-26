@@ -1,3 +1,9 @@
+---
+name: agentify
+description: Rewrites the current plan to use Claude Code's Agent Teams feature (TeamCreate) for parallel execution across independent work streams. Use when the user has an active plan and wants to parallelize it with Agent Teams.
+disable-model-invocation: true
+---
+
 Modify the current plan to use Claude Code's Agent Teams feature (TeamCreate) for parallel execution.
 
 ## Step 1: Read the plan
